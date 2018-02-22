@@ -240,20 +240,31 @@ private class TestLightningSharing {
     	a.Name = 'Ink, inc.';
     	insert a;
 
+			// adding test data from Wacker Project
+
+			List<Account> lstAccounts = MVP_TestFactory_Account.createAccounts(1,MVP_Constants.ACCOUNT_CUSTOMERTYPE);
+			List<Contact> lstContacts = MVP_TestFactory_Contact.createContacts(1);
+			List<MVP_Business_Team__c> lstBTs = MVP_TestFactory_BusinessTeam.createBusinessTeams(1);
+			List<MVP_Market_Segment__c> lstMSs = MVP_TestFactory_MarketSegment.createMarketSegments(1,lstBTs[0].Id);
+			List<MVP_Sales_Org__c> lstSalesOrgs = MVP_TestFactory_SalesOrg.createSalesOrgs(1);
+			List<Opportunity> lstOpportunityProposal = MVP_TestFactory_Opportunity.createOpportunities(1,MVP_Constants.OPPORTUNITY_STAGE_PROPOSAL,lstAccounts[0].Id,lstContacts[0].Id,lstBTs[0].Id,lstMSs[0].Id,lstSalesOrgs[0].Id);
+			List<Opportunity> lstOpportunityClosed = MVP_TestFactory_Opportunity.updateOpportunities(lstOpportunityProposal,MVP_Constants.OPPORTUNITY_STAGE_CLOSEDWON);
+
+
     	contact c = new contact();
-    	c.accountId = a.id;
+    	//c.accountId = a.id;
+			c.accountId = lstAccounts[0].id;
     	c.FirstName = 'Sarah';
     	c.LastName = 'McLaughlin';
     	c.Email = 'sarah@gmail.com';
     	insert c;
 
-    	Opportunity o = new Opportunity();
-    	o.accountId = a.id;
-    	o.closeDate = system.today();
-    	o.Name = 'biggest deal ever';
-
-    	o.StageName = [select MasterLabel from OpportunityStage where IsClosed = false][0].MasterLabel;
-    	insert o;
+//		Opportunity o = new Opportunity();
+//		o.accountId = a.id;
+//		o.closeDate = system.today();
+//		o.Name = 'biggest deal ever';
+//	 	o.StageName = [select MasterLabel from OpportunityStage where IsClosed = false][0].MasterLabel;
+//    insert o;
 
       PrivateTestObject__c pto = new PrivateTestObject__c();
       insert pto;
